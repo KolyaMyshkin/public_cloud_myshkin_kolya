@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "Player.hpp"
 
-Player::Player(int Player_health, int Player_money, int Player_points) {
+Player::Player(int Player_health, int Player_money, int Player_points){
     this->Player_health = Player_health;
     this->Player_money = Player_money;
     this->Player_points = Player_points;
