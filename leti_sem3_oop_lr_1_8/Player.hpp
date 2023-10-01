@@ -7,8 +7,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <map>
-#include "Weapon.hpp"
-#include "Pistol.hpp"
+//#include "Weapon.hpp"
+//#include "Pistol.hpp"
+
 #define PISTOL_NAME_USPS "USPS"
 #define PISTOL_USPS_DAMAGE 10
 #define PISTOL_USPS_RADIUS 5
@@ -20,14 +21,14 @@
 #define PISTOL_DESERT_EAGLE_RADIUS 5
 
 class Player {
-private:
     int Player_health;
     int Player_money;
     int Player_points;
-    std::map <std::string, Pistol> Map_Pistol;
-    Pistol Player_pistol;
+    // std::map <std::string, Pistol> Map_Pistol;
+    // Pistol Player_pistol;
 public:
-    Player(int Player_health, int Player_money, int Player_points);
+//    Player(int Player_health, int Player_money, int Player_points);
+    Player();
     int get_Player_health();
     int get_Player_money();
     int get_Player_points();
@@ -35,8 +36,8 @@ public:
     void set_Player_health(int Player_health);
     void set_Player_money(int Player_money);
     void set_Player_points(int Player_points);
-    void set_Player_weapon(Weapon weapon);
-    ~Player();
+    // void set_Player_weapon(Weapon weapon);
+    // ~Player();
 };
 
 #endif /* Player_hpp */
@@ -47,3 +48,4 @@ public:
  -как написать контроллер?
  -
  */
+
