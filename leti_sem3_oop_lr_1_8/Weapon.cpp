@@ -12,7 +12,6 @@ Weapon::Weapon(std::string name, int damage, int radius) {
     this->damage = damage;
     this->radius = radius;
 };
-
 void Weapon::set_name(std::string name) {
     this->name = name;
 }
@@ -35,3 +34,4 @@ int Weapon::get_radius() {
 Weapon::~Weapon() {};
 
 #endif
+

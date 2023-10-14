@@ -6,9 +6,7 @@
 
 #define MAX_HEIGHT 20
 #define MAX_WEIGHT 20
-
-
-Controller::Controller(Player &player): player(player), x(0), y(0) {}
+#define MAX_WIDTH 20
 
 void Controller::move(Move step) {
     switch (step) {
@@ -29,6 +27,8 @@ void Controller::move(Move step) {
             break;
     }
 }
+
+Controller::Controller(Player &player): player(player), x(0), y(0) {}
 
 int Controller::get_x() {
     return this->x;

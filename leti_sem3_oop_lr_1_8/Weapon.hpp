@@ -24,3 +24,4 @@ public:
 };
 
 #endif /* Weapon_hpp */
+

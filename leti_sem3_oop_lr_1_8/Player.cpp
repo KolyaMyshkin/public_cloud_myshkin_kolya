@@ -14,10 +14,7 @@
 #include <stdio.h>
 #include "Player.hpp"
 
-// Player::Player(int Player_health, int Player_money, int Player_points) {
-//     this->Player_health = Player_health;
-//     this->Player_money = Player_money;
-//     this->Player_points = Player_points;
+Player::Player() : Player_health(MAX_HP), Player_money(MIN_MONEY), Player_points(MIN_POINTS) {};
 //     this->Gun = new Pistol("PISTOL_NAME_USPS", PISTOL_USPS_DAMAGE, PISTOL_USPS_RADIUS);
 //     Pistol USPS = Pistol(PISTOL_NAME_USPS, PISTOL_USPS_DAMAGE, PISTOL_USPS_RADIUS);
 //     Pistol FIVE_SEVEN = Pistol(PISTOL_NAME_FIVE_SEVEN, PISTOL_FIVE_SEVEN_DAMAGE, PISTOL_FIVE_SEVEN_RADIUS);
@@ -53,3 +50,4 @@ void Player::set_Player_points(int Player_points) {
 
 
 #endif
+
