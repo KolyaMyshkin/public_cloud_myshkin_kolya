@@ -21,23 +21,19 @@
 #define PISTOL_DESERT_EAGLE_RADIUS 5
 
 class Player {
-    int Player_health;
-    int Player_money;
-    int Player_points;
-    // std::map <std::string, Pistol> Map_Pistol;
-    // Pistol Player_pistol;
+    int player_health;
+    int player_money;
+    int player_points;
 public:
-//    Player(int Player_health, int Player_money, int Player_points);
     Player();
-    int get_Player_health();
-    int get_Player_money();
-    int get_Player_points();
+    int get_player_health();
+    int get_player_money();
+    int get_player_points();
     
-    void set_Player_health(int Player_health);
-    void set_Player_money(int Player_money);
-    void set_Player_points(int Player_points);
-    // void set_Player_weapon(Weapon weapon);
-    // ~Player();
+    void set_player_health(int Player_health);
+    void set_player_money(int Player_money);
+    void set_player_points(int Player_points);
+  
 };
 
 #endif /* Player_hpp */

@@ -28,7 +28,7 @@ Cell& Cell::operator=(Cell&& other){
     return *this;
 }
  
-bool Cell::get_isPassable(){
+bool Cell::get_is_Passable(){
     return passable;
 }
  
