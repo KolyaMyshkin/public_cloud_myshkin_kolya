@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/nikolaymyshkin/public_cloud_myshkin_kolya/public_cloud_myshkin_kolya/leti_sem3_oop_lr_1_8",
+      "program": "/Users/nikolaymyshkin/public_cloud_myshkin_kolya/public_cloud_myshkin_kolya/leti_sem3_oop_lr_1_8/build/Debug/outDebug"
+    }
+  ]
+}
