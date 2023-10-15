@@ -4,46 +4,56 @@
 #include "GameField.hpp"
 
 #include <iostream>
-#define MAX_WIDTH 20
-#define MAX_HEIGHT 20
 #define ENTRANCE 0
 #define MIN_WIDTH_HEIGHT 0
-GameField::GameField() : width(MAX_WIDTH), height(MAX_HEIGHT),
-entrance_X(ENTRANCE), entrance_Y(ENTRANCE), exit_X(MAX_WIDTH - 1), exit_Y(MAX_HEIGHT - 1) {
-    cells = new Cell*[width];
-    for (int i = 0; i < width; i++) {
-//        cells[i] = new Cell[height];
-        cells[i] = (Cell*)malloc(sizeof(Cell) * height);
-    }
-    exit_X = width - 1;
-    exit_Y = height - 1;
-}
+// GameField::GameField() : width(MAX_WIDTH), height(MAX_HEIGHT),
+// entrance_x(ENTRANCE), entrance_y(ENTRANCE), exit_x(MAX_WIDTH - 1), exit_y(MAX_HEIGHT - 1) {
+//     cells = new Cell*[width];
+//     for (int i = 0; i < width; i++) {
+//         cells[i] = (Cell*)malloc(sizeof(Cell) * height);
+//     }
+//     exit_x = width - 1;
+//     exit_y = height - 1;
+// }
  
-GameField::GameField(int w, int h) : width(w), height(h),
-entrance_X(ENTRANCE), entrance_Y(ENTRANCE), exit_X(MAX_WIDTH - 1), exit_Y(MAX_HEIGHT - 1) {
-    if (w > MAX_WIDTH ||  w < MIN_WIDTH_HEIGHT || h > MAX_HEIGHT || h < MIN_WIDTH_HEIGHT) {
-        std::cout << "Неверные размеры поля, размеры будут установлены по умолчанию\n";
-        width = MAX_WIDTH;
-        height = MAX_HEIGHT;
-    }
-    cells = new Cell*[width];
-    for (int i = 0; i < width; i++) {
-//        cells[i] = new Cell[height];
-        cells[i] = (Cell*)malloc(sizeof(Cell) * height);
-    }
+// GameField::GameField(int w, int h) : width(w), height(h),
+// entrance_x(ENTRANCE), entrance_y(ENTRANCE), exit_x(MAX_WIDTH - 1), exit_y(MAX_HEIGHT - 1) {
+//     if (w > MAX_WIDTH ||  w < MIN_WIDTH_HEIGHT || h > MAX_HEIGHT || h < MIN_WIDTH_HEIGHT) {
+//         std::cout << "Неверные размеры поля, размеры будут установлены по умолчанию\n";
+//         width = MAX_WIDTH;
+//         height = MAX_HEIGHT;
+//     }
+//     cells = new Cell*[width];
+//     for (int i = 0; i < width; i++) {
+//         cells[i] = (Cell*)malloc(sizeof(Cell) * height);
+//     }
  
-    exit_X = width - 1;
-    exit_Y = height - 1;
+//     exit_x = width - 1;
+//     exit_y = height - 1;
+// }
+
+GameField::GameField(int h, int w) : width(w), height(h),
+entrance_x(ENTRANCE), entrance_y(ENTRANCE), exit_x(height), exit_y(width) {
+    
+    // здесь сразу идут верные кординты
+    // if (w > width ||  w < MIN_WIDTH_HEIGHT || h > height || h < MIN_WIDTH_HEIGHT) {
+    //     std::cout << "Неверные размеры поля, размеры будут установлены по умолчанию\n";
+    //     width = width;
+    //     height = MAX_HEIGHT;
+    // } // 
+    cells = new Cell*[height];
+    for (int i = 0; i < height; i++) {
+        cells[i] = (Cell*)malloc(sizeof(Cell) * width);
+    }
 }
  
 GameField::GameField(const GameField& other) : width(other.width), height(other.height),
-entrance_X(other.entrance_X), entrance_Y(other.entrance_Y), exit_X(other.exit_X), exit_Y(other.exit_Y)
+entrance_x(other.entrance_x), entrance_y(other.entrance_y), exit_x(other.exit_x), exit_y(other.exit_y)
 {
-    cells = new Cell*[width];
-    for (int i = 0; i < width; i++) {
-//        cells[i] = new Cell[height];
-        cells[i] = (Cell*)malloc(sizeof(Cell) * height);
-        for (int j = 0; j < height; j++) {
+    cells = new Cell*[height];
+    for (int i = 0; i < height; i++) {
+        cells[i] = (Cell*)malloc(sizeof(Cell) * width);
+        for (int j = 0; j < width; j++) {
             cells[i][j] = other.cells[i][j];
         }
     }
@@ -54,23 +64,22 @@ GameField& GameField::operator=(const GameField& other){
         return *this;
     }
  
-    for (int i = 0; i < width; i++) {
+    for (int i = 0; i < height; i++) {
         delete[] cells[i];
     }
     delete[] cells;
  
     width = other.width;
     height = other.height;
-    entrance_X = other.entrance_X;
-    entrance_Y = other.entrance_Y;
-    exit_X = other.exit_X;
-    exit_Y = other.exit_Y;
+    entrance_x = other.entrance_x;
+    entrance_y = other.entrance_y;
+    exit_x = other.exit_x;
+    exit_y = other.exit_y;
  
-    cells = new Cell*[width];
-    for (int i = 0; i < width; i++) {
-//        cells[i] = new Cell[height];
-        cells[i] = (Cell*)malloc(sizeof(Cell) * height);
-        for (int j = 0; j < height; j++) {
+    cells = new Cell*[height];
+    for (int i = 0; i < height; i++) {
+        cells[i] = (Cell*)malloc(sizeof(Cell) * width);
+        for (int j = 0; j < width; j++) {
             cells[i][j] = other.cells[i][j];
         }
     }
@@ -79,15 +88,15 @@ GameField& GameField::operator=(const GameField& other){
 }
  
 GameField::GameField(GameField&& other) : cells(other.cells), width(other.width), height(other.height),
-entrance_X(other.entrance_X), entrance_Y(other.entrance_Y), exit_X(other.exit_X), exit_Y(other.exit_Y)
+entrance_x(other.entrance_x), entrance_y(other.entrance_y), exit_x(other.exit_x), exit_y(other.exit_y)
 {
     other.cells = nullptr;
     other.width = 0;
     other.height = 0;
-    other.entrance_X = 0;
-    other.entrance_Y = 0;
-    other.exit_X = 0;
-    other.exit_Y = 0;
+    other.entrance_x = 0;
+    other.entrance_y = 0;
+    other.exit_x = 0;
+    other.exit_y = 0;
 }
  
 GameField& GameField::operator=(GameField&& other){
@@ -95,15 +104,7 @@ GameField& GameField::operator=(GameField&& other){
         return *this;
     }
     
-//    for (int i = 0; i < width; i++) {
-//        for (int j = 0; j < height; j++) {
-//            delete cells[i][j];
-//        }
-//        delete[] cells[i];
-//    }
-//    delete[] cells;
-    
-    for (int i = 0; i < width; i++) {
+    for (int i = 0; i < height; i++) {
         delete[] cells[i];
     }
     delete[] cells;
@@ -111,72 +112,104 @@ GameField& GameField::operator=(GameField&& other){
     cells = other.cells;
     width = other.width;
     height = other.height;
-    entrance_X = other.entrance_X;
-    entrance_Y = other.entrance_Y;
-    exit_X = other.exit_X;
-    exit_Y = other.exit_Y;
+    entrance_x = other.entrance_x;
+    entrance_y = other.entrance_y;
+    exit_x = other.exit_x;
+    exit_y = other.exit_y;
  
     other.cells = nullptr;
     other.width = 0;
     other.height = 0;
-    other.entrance_X = 0;
-    other.entrance_Y = 0;
-    other.exit_X = 0;
-    other.exit_Y = 0;
+    other.entrance_x = 0;
+    other.entrance_y = 0;
+    other.exit_x = 0;
+    other.exit_y = 0;
  
     return *this;
 }
  
 GameField::~GameField() {
-    std::cout << "dest\n";
-    for (int i = 0; i < width; i++) {
+    for (int i = 0; i < height; i++) {
         delete[] cells[i];
     }
     delete[] cells;
 }
  
-Cell& GameField::getCell(int x, int y){
+Cell& GameField::get_cell(int x, int y){
     return cells[x][y];
 }
  
-int GameField::getWidth(){
+int GameField::get_width(){
     return width;
 }
  
-int GameField::getHeight(){
+int GameField::get_height(){
     return height;
 }
  
-int GameField::getentrance_X(){
-    return entrance_X;
+int GameField::get_entrance_x(){
+    return entrance_x;
 }
  
-int GameField::getentrance_Y(){
-    return entrance_Y;
+int GameField::get_entrance_y(){
+    return entrance_y;
 }
  
-int GameField::getexit_X(){
-    return exit_X;
+int GameField::get_exit_x(){
+    return exit_x-1;
 }
  
-int GameField::getexit_Y(){
-    return exit_Y;
+int GameField::get_exit_y(){
+    return exit_y-1;
 }
  
-void GameField::setEntrance(int x , int y){
-    if((x <= width && x >= ENTRANCE) && (y <= height && y >= ENTRANCE)){
-        entrance_X = x;
-        entrance_Y = y;
+void GameField::set_entrance(int x , int y){
+    if((x <= height-1 && x >= ENTRANCE) && (y <= width-1 && y >= ENTRANCE)){
+        entrance_x = x;
+        entrance_y = y;
     }else{
         std::cout << "Неверная точка входа\n";
     }
 }
  
-void GameField::setExit(int x , int y){
-    if((x <= width && x >= MIN_WIDTH_HEIGHT) && (y <= height && y >= MIN_WIDTH_HEIGHT)){
-        exit_X = x;
-        exit_Y = y;
+void GameField::set_exit(int x , int y){
+    if((x <= height-1 && x >= MIN_WIDTH_HEIGHT) && (y <= width-1 && y >= MIN_WIDTH_HEIGHT)){
+        exit_x = x;
+        exit_y = y;
     }else{
         std::cout << "Неверная точка выхода\n";
     }
+}
+
+void GameField::GF_print(Controller& controller) {
+    for (int i = 0; i < this->get_height(); i++) {
+        for (int j = 0; j < this->get_width(); j++) {
+            if (i == this->get_entrance_y() && j == this->get_entrance_y()) {
+                if (i == controller.get_x() && j == controller.get_y()) {
+                    std::cout << "@" << " ";
+                } else {
+                    std::cout << "S" << " ";
+                }      
+            }
+            else if (i == this->get_exit_x() && j == this->get_exit_y()) {
+                if (i == controller.get_x() && j == controller.get_y()) {
+                    std::cout << "@" << " ";
+                } else {
+                    std::cout << "F" << " ";
+                }
+            }
+            else if (i == controller.get_x() && j == controller.get_y()) {
+                std::cout << "@" << " ";
+            } else {
+                if (this->cells[i][j].get_is_Passable() == true) {
+                    std::cout << '#' << " ";
+                } else {
+                    std::cout << '.' << " ";
+                }
+            }
+        }
+        std::cout << "\n";
+    }
+    std::cout << "(x: " << controller.get_x() << " y: " << controller.get_y() << ")\n";
+    return;
 }

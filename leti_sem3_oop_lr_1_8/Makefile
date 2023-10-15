@@ -1,5 +1,5 @@
-main : main.o Cell.o Controller.o GameField.o Player.o
-	g++ main.o Cell.o Controller.o GameField.o Player.o -o main
+main : main.o Cell.o Controller.o GameField.o Player.o Intro.o
+	g++ main.o Cell.o Controller.o GameField.o Player.o Intro.o -o main
 
 main.o : main.cpp
 	g++ -c main.cpp -o main.o
@@ -15,6 +15,9 @@ GameField.o : GameField.cpp
 
 Player.o : Player.cpp
 	g++ -c Player.cpp -o Player.o
+
+Intro.o : Intro.cpp
+	g++ -c Intro.cpp -o Intro.o
 
 clean :
 	rm main *.o 
