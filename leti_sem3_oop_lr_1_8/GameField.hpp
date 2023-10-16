@@ -5,6 +5,7 @@
 #define GameField_hpp
 #include "Cell.hpp"
 #include "Controller.hpp"
+#include "Player.hpp"
 
 #include <stdio.h>
 
@@ -34,7 +35,7 @@ public:
     int get_exit_y();
     void set_entrance(int x , int y);
     void set_exit(int x , int y);
-    void GF_print(Controller& controller);
+    void GF_print(Controller& controller, Player& player);
 };
 
 #endif /* GameField_hpp */

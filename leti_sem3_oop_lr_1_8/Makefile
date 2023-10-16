@@ -1,24 +1,61 @@
-main : main.o Cell.o Controller.o GameField.o Player.o Intro.o
-	g++ main.o Cell.o Controller.o GameField.o Player.o Intro.o -o main
+# TARGET = main
+# CC = g++
 
-main.o : main.cpp
-	g++ -c main.cpp -o main.o
+#здесь будут храниться имена всех файлов с окончанием на .cpp // src - хранит все исходники на .cpp 
+# SRC = $(wildcard *.cpp) 
 
-Cell.o : Cell.cpp
-	g++ -c Cell.cpp -o Cell.o
+#хранит все объектные файлы // берт файлы .срр и добавляе к себе но с расширением .о и берет их из SRC
+# OBJ = $(patsubst %.cpp, %.o, $(SRC))
 
-Controller.o : Controller.cpp
-	g++ -c Controller.cpp -o Controller.o
+#конструкция для маленьких целей в общем случае
+# $< - справа от ":"
+# $> - слева от ":"
 
-GameField.o : GameField.cpp
-	g++ -c GameField.cpp -o GameField.o
+#шаблон сразу для каждого файла из SRC
+#%.o : %.cpp
+#	$(CC) -c $< -o $@
 
-Player.o : Player.cpp
-	g++ -c Player.cpp -o Player.o
 
-Intro.o : Intro.cpp
-	g++ -c Intro.cpp -o Intro.o
 
+#$(TARGET) : $(OBJ)
+#	S(CC) $(OBJ) -o $(TARGET)
+
+#$(TARGET) : main.o Cell.o Controller.o GameField.o Player.o Intro.o
+#	$(CC) main.o Cell.o Controller.o GameField.o Player.o Intro.o -o $(TARGET)
+
+#main.o : main.cpp
+#	$(CC) -c main.cpp -o main.o
+
+#Cell.o : Cell.cpp
+#	$(CC) -c Cell.cpp -o Cell.o
+
+#Controller.o : Controller.cpp
+#	$(CC) -c Controller.cpp -o Controller.o
+
+#GameField.o : GameField.cpp
+#	$(CC) -c GameField.cpp -o GameField.o
+
+#Player.o : Player.cpp
+#	$(CC) -c Player.cpp -o Player.o
+
+#Intro.o : Intro.cpp
+#	$(CC) -c Intro.cpp -o Intro.o
+
+#clean :
+#	rm $(TARGET) *.o 
+
+
+
+
+TARGET = main
+CC = g++
+SRC = $(wildcard *.cpp) 
+OBJ = $(patsubst %.cpp, %.o, $(SRC))
+
+$(TARGET) : $(OBJ)
+	$(CC) $(OBJ) -o $(TARGET)
+%.o : %.cpp
+	$(CC) -c $< -o $@
 clean :
-	rm main *.o 
+	rm $(TARGET) *.o 
 
