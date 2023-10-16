@@ -32,6 +32,10 @@ int main(int argc, const char * argv[]) {
     
     GameField GF(intro_h, intro_w);
 
+    GF.set_entrance(1,8);
+    controller.set_x(1);
+    controller.set_y(8);
+    GF.set_exit(8,3);
     GF.get_cell(1, 1).set_Passable(1);
     GF.get_cell(1, 2).set_Passable(1);
     GF.get_cell(1, 3).set_Passable(1);
@@ -40,7 +44,7 @@ int main(int argc, const char * argv[]) {
     GF.get_cell(3, 3).set_Passable(1);
     GF.get_cell(2, 2).set_Passable(1);
     GF.get_cell(2, 1).set_Passable(1);
-    GF.GF_print(controller);
+    GF.GF_print(controller,player);
     char c = ' ';
     while ((controller.get_x() != GF.get_exit_x() ||  controller.get_y() != GF.get_exit_y()) && std::cin >> c) {
         if (controller.get_x() == GF.get_exit_x() && controller.get_y() == GF.get_exit_y()) {
@@ -56,7 +60,7 @@ int main(int argc, const char * argv[]) {
             } else if (c == 's') {
                 controller.move(Move::Down);
             }
-            GF.GF_print(controller);
+            GF.GF_print(controller,player);
         }
     }    
     std::cout << "Вы дошли до финиша!!!\n";

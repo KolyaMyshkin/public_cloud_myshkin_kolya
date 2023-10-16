@@ -165,8 +165,10 @@ int GameField::get_exit_y(){
  
 void GameField::set_entrance(int x , int y){
     if((x <= height-1 && x >= ENTRANCE) && (y <= width-1 && y >= ENTRANCE)){
-        entrance_x = x;
-        entrance_y = y;
+        this->entrance_x = x;
+        this->entrance_y = y;
+        // entrance_x = x;
+        // entrance_y = y;
     }else{
         std::cout << "Неверная точка входа\n";
     }
@@ -174,17 +176,19 @@ void GameField::set_entrance(int x , int y){
  
 void GameField::set_exit(int x , int y){
     if((x <= height-1 && x >= MIN_WIDTH_HEIGHT) && (y <= width-1 && y >= MIN_WIDTH_HEIGHT)){
-        exit_x = x;
-        exit_y = y;
+        this->exit_x = x;
+        this->exit_y = y;
+        // exit_x = x;
+        // exit_y = y;
     }else{
         std::cout << "Неверная точка выхода\n";
     }
 }
 
-void GameField::GF_print(Controller& controller) {
+void GameField::GF_print(Controller& controller, Player& player) {
     for (int i = 0; i < this->get_height(); i++) {
         for (int j = 0; j < this->get_width(); j++) {
-            if (i == this->get_entrance_y() && j == this->get_entrance_y()) {
+            if (i == this->get_entrance_x() && j == this->get_entrance_y()) {
                 if (i == controller.get_x() && j == controller.get_y()) {
                     std::cout << "@" << " ";
                 } else {
@@ -210,6 +214,6 @@ void GameField::GF_print(Controller& controller) {
         }
         std::cout << "\n";
     }
-    std::cout << "(x: " << controller.get_x() << " y: " << controller.get_y() << ")\n";
+    std::cout << "(x: " << controller.get_x() << ", y: " << controller.get_y() << ")" << "   (hp: " << player.get_player_health() << ", mny: " << player.get_player_money() << ", pnts: " << player.get_player_points() << ")\n";
     return;
 }
