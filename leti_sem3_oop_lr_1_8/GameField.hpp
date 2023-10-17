@@ -25,6 +25,7 @@ public:
     GameField& operator=(const GameField& other);
     GameField(GameField&& other);
     GameField& operator=(GameField&& other);
+    // GameField&& make();
     ~GameField();
     Cell& get_cell(int x, int y);
     int get_width();

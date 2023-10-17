@@ -8,7 +8,6 @@
 
 #include <iostream>
 
-
 int main(int argc, const char * argv[]) {
     int intro_h=-1,intro_w=-1;
     intro(intro_h,intro_w);
@@ -27,8 +26,8 @@ int main(int argc, const char * argv[]) {
     GF.get_cell(2, 2).set_Passable(1);
 
 
-    std::cout <<"print GF:\n";
-    GF.GF_print(controller,player);
+    // std::cout <<"print GF:\n";
+    // GF.GF_print(controller,player);
 
     std::cout << "\n------------------------------\n";
 
@@ -36,9 +35,32 @@ int main(int argc, const char * argv[]) {
     // получается при копировании GF -> GF1 нам не важно какого размера GF, я просто должен сделать абсолютную копию GF
     // и при этом GF не теряет никаких своих качест(остается таким же каким и был)
     // на выходе имеем полностью совпадающие GF и GF1
-    GameField GF1 = GF; // == GameField GF1(GF); // C Copy
-    std::cout <<"print GF1:\n";
+    // GameField GF1(GF); // == GameField GF1(GF); // C Copy
+    // std::cout <<"print GF1:\n";
+    // GF1.GF_print(controller,player); 
+    
+    //копирование 
+    GameField GF1(GF);
     GF1.GF_print(controller,player); 
+
+    //копирование 
+    GameField GF2 = GF;
+    GF2.GF_print(controller,player);    
+
+    // копирование  через = 
+    GameField GF3(10,10);
+    GF3 = GF;
+    GF3.GF_print(controller,player);    
+
+
+    // перемещение через =
+    GameField f(10,10);
+    f = GameField(20,20);
+    f.GF_print(controller,player);
+
+    // перемещение через конструтор (не работает)
+    GameField g(make());
+
 
     std::cout << "\n------------------------------\n";
 
@@ -49,22 +71,22 @@ int main(int argc, const char * argv[]) {
     // на выходе имеем полностью совпадающие GF и GF1
     
     
-    GameField GF2(10,10); // Cons
-    std::cout <<"print GF2:\n";
-    GF2.GF_print(controller,player);
+    // GameField GF2(10,10); // Cons
+    // std::cout <<"print GF2:\n";
+    // GF2.GF_print(controller,player);
     
-    GF2 = GF; // Assig Copy // C Copy
-    std::cout <<"print GF2:\n";
-    GF2.GF_print(controller,player);
+    // GF2 = GF; // Assig Copy // C Copy
+    // std::cout <<"print GF2:\n";
+    // GF2.GF_print(controller,player);
 
     // std::cout << "\n------------------------------\n";
     
     // конструктор перемещения 
     // здесь мы создаем новый экземпляр класса GF5, который должен перенять все данные из GF
     // при этом GF должен совободить память
-    GameField GF5(GF); // тут должен вызываться оператор присванивания с перемещением???????
-    std::cout <<"print GF2:\n";
-    GF5.GF_print(controller,player);
+    // GameField GF5(GF); // тут должен вызываться оператор присванивания с перемещением???????
+    // std::cout <<"print GF2:\n";
+    // GF5.GF_print(controller,player);
 
     // std::cout << "\n------------------------------\n";
 
@@ -72,11 +94,11 @@ int main(int argc, const char * argv[]) {
     // здесь мы у сущетвующего элемента должны освободить память (очистить все ячейки)
     // и  установить ему новые значения нового поля
 
-    GF = GameField(20,20);// Cons // Assig Move // type = &&GameField
-    std::cout <<"print GF:\n";
-    GF.GF_print(controller,player);
+    // GF = GameField(20,20);// Cons // Assig Move // type = &&GameField
+    // std::cout <<"print GF:\n";
+    // GF.GF_print(controller,player);
 
-    std::cout << "\n------------------------------\n";
+    // std::cout << "\n------------------------------\n";
 
     
 

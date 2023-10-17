@@ -7,6 +7,7 @@
 #define ENTRANCE 0
 #define MIN_WIDTH_HEIGHT 0
 
+
 GameField::GameField(int h, int w) : width(w), height(h),
 entrance_x(ENTRANCE), entrance_y(ENTRANCE), exit_x(h), exit_y(w) {
     std::cout << "Cons\n";
@@ -15,7 +16,9 @@ entrance_x(ENTRANCE), entrance_y(ENTRANCE), exit_x(h), exit_y(w) {
         cells[i] = (Cell*)malloc(sizeof(Cell) * width);
     }
 }
- 
+
+
+
 GameField::GameField(const GameField& other) : width(other.width), height(other.height),
 entrance_x(other.entrance_x), entrance_y(other.entrance_y), exit_x(other.exit_x), exit_y(other.exit_y)  {
     std::cout << "C Copy\n";
@@ -30,66 +33,58 @@ entrance_x(other.entrance_x), entrance_y(other.entrance_y), exit_x(other.exit_x)
 GameField& GameField::operator=(const GameField& other){
     std::cout << "Assig Copy\n";
     GameField GF_tmp(other);
-    std::swap(this->width, GF_tmp.width);
-    std::swap(this->height, GF_tmp.height);
-    std::swap(this->entrance_x, GF_tmp.entrance_x);
-    std::swap(this->entrance_y, GF_tmp.entrance_y);
-    std::swap(this->exit_x, GF_tmp.exit_x);
-    std::swap(this->exit_y, GF_tmp.exit_y);
+    this->width = GF_tmp.width;
+    this->height = GF_tmp.height;
+    this->entrance_x = GF_tmp.entrance_x;
+    this->entrance_y = GF_tmp.entrance_y;
+    this->exit_x = GF_tmp.exit_x;
+    this->exit_y = GF_tmp.exit_y;
     for (int i = 0; i < this->height; i++) {
-        cells[i] = GF_tmp.cells[i];
+        for (int j = 0; j < this->width; j++) {
+            this->cells[i][j] = other.cells[i][j];
+        }
     }
     return *this;
 }
  
 GameField::GameField(GameField&& other) {
     std::cout << "C Move\n";
-    
-    this->~GameField();
-    // std::swap(this->width, other.width);
-    // std::swap(this->height, other.height);
-    // std::swap(this->entrance_x, other.entrance_x);
-    // std::swap(this->entrance_y, other.entrance_y);
-    // std::swap(this->exit_x, other.exit_x);
-    // std::swap(this->exit_y, other.exit_y);
-    // std::swap(this->cells, other.cells);
-    this->width = std::move(other.width);
-    this->height = std::move(other.height);
-    this->entrance_x = std::move(other.entrance_x);
-    this->entrance_y = std::move(other.entrance_y);
-    this->exit_x = std::move(other.exit_x);
-    this->exit_y = std::move(other.exit_y);
-    this->cells = std::move(other.cells);
+    this->width = other.width;
+    this->height = other.height;
+    this->entrance_x = other.entrance_x;
+    this->entrance_y = other.entrance_y;
+    this->exit_x = other.exit_x;
+    this->exit_y = other.exit_y;
+    this->cells = other.cells;
     // corrections
     other.cells = nullptr;
     other.width = 0;
     other.height = 0;
 }
- 
+
 GameField& GameField::operator=(GameField&& other){
     std::cout << "Assig Move\n";
     if (this == &other) {
         return *this;
     }
-    this->~GameField();
-    this->width = std::move(other.width);
-    this->height = std::move(other.height);
-    this->entrance_x = std::move(other.entrance_x);
-    this->entrance_y = std::move(other.entrance_y);
-    this->exit_x = std::move(other.exit_x);
-    this->exit_y = std::move(other.exit_y);
+    this->width = other.width;
+    this->height = other.height;
+    this->entrance_x = other.entrance_x;
+    this->entrance_y = other.entrance_y;
+    this->exit_x = other.exit_x;
+    this->exit_y = other.exit_y;
     this->cells = new Cell*[this->height];
     for (int i = 0; i < this->height; i++) {
-        // this->cells[i] = std::move(other.cells[i]);
         this->cells[i] = (Cell*)malloc(sizeof(Cell) * this->width);
         for (int j = 0; j < this->width; j++) {
-            this->cells[i][j] = std::move(other.cells[i][j]);
+            this->cells[i][j] = other.cells[i][j];
         }
     }
     return *this;
 }
  
 GameField::~GameField() {
+    std::cout << "Dest\n";
     for (int i = 0; i < height; i++) {
         delete[] cells[i];
     }
