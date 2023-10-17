@@ -19,7 +19,7 @@ class GameField{
     Cell** cells;
 
 public:
-    GameField();
+    // GameField();
     GameField(int h, int w);
     GameField(const GameField& other);
     GameField& operator=(const GameField& other);
