@@ -37,35 +37,33 @@ GameField& GameField::operator=(const GameField& other){
     std::swap(this->exit_x, GF_tmp.exit_x);
     std::swap(this->exit_y, GF_tmp.exit_y);
     for (int i = 0; i < this->height; i++) {
-        for (int j = 0; j < this->width; j++) {
-            std::swap(this->cells[i][j], GF_tmp.cells[i][j]);
-        }
+        cells[i] = GF_tmp.cells[i];
     }
     return *this;
 }
  
-GameField::GameField(GameField&& other): width(0),height(0),entrance_x(0),entrance_y(0),
-exit_x(0), exit_y(0), cells(nullptr) {
+GameField::GameField(GameField&& other) {
     std::cout << "C Move\n";
     
+    this->~GameField();
+    // std::swap(this->width, other.width);
+    // std::swap(this->height, other.height);
+    // std::swap(this->entrance_x, other.entrance_x);
+    // std::swap(this->entrance_y, other.entrance_y);
+    // std::swap(this->exit_x, other.exit_x);
+    // std::swap(this->exit_y, other.exit_y);
+    // std::swap(this->cells, other.cells);
     this->width = std::move(other.width);
     this->height = std::move(other.height);
     this->entrance_x = std::move(other.entrance_x);
     this->entrance_y = std::move(other.entrance_y);
     this->exit_x = std::move(other.exit_x);
     this->exit_y = std::move(other.exit_y);
-
-    this->cells = new Cell*[this->height];
-    for (int i = 0; i < this->height; i++) {
-        this->cells[i] = (Cell*)malloc(sizeof(Cell) * this->width);
-        for (int j = 0; j < this->width; j++) {
-            this->cells[i][j] = std::move(other.cells[i][j]);
-        }
-    }
-    for (int i = 0; i < height; i++) {
-        delete[] other.cells[i];
-    }
-    delete[] other.cells;
+    this->cells = std::move(other.cells);
+    // corrections
+    other.cells = nullptr;
+    other.width = 0;
+    other.height = 0;
 }
  
 GameField& GameField::operator=(GameField&& other){
@@ -73,20 +71,16 @@ GameField& GameField::operator=(GameField&& other){
     if (this == &other) {
         return *this;
     }
-    for (int i = 0; i < this->height; i++) {
-        delete[] this->cells[i];
-    }
-    delete[] this->cells;
-    
+    this->~GameField();
     this->width = std::move(other.width);
     this->height = std::move(other.height);
     this->entrance_x = std::move(other.entrance_x);
     this->entrance_y = std::move(other.entrance_y);
     this->exit_x = std::move(other.exit_x);
     this->exit_y = std::move(other.exit_y);
-
     this->cells = new Cell*[this->height];
     for (int i = 0; i < this->height; i++) {
+        // this->cells[i] = std::move(other.cells[i]);
         this->cells[i] = (Cell*)malloc(sizeof(Cell) * this->width);
         for (int j = 0; j < this->width; j++) {
             this->cells[i][j] = std::move(other.cells[i][j]);

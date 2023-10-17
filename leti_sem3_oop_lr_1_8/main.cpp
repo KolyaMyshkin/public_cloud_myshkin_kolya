@@ -47,6 +47,8 @@ int main(int argc, const char * argv[]) {
     // то есть у нас выоста и ширина GF должны совпадать с высотой и шириной GF2 соответственно
     // и при этом GF не теряет никаких своих качест(остается таким же каким и был)
     // на выходе имеем полностью совпадающие GF и GF1
+    
+    
     GameField GF2(10,10); // Cons
     std::cout <<"print GF2:\n";
     GF2.GF_print(controller,player);
@@ -55,7 +57,7 @@ int main(int argc, const char * argv[]) {
     std::cout <<"print GF2:\n";
     GF2.GF_print(controller,player);
 
-    std::cout << "\n------------------------------\n";
+    // std::cout << "\n------------------------------\n";
     
     // конструктор перемещения 
     // здесь мы создаем новый экземпляр класса GF5, который должен перенять все данные из GF
@@ -64,18 +66,19 @@ int main(int argc, const char * argv[]) {
     std::cout <<"print GF2:\n";
     GF5.GF_print(controller,player);
 
-    std::cout << "\n------------------------------\n";
+    // std::cout << "\n------------------------------\n";
 
     // оператор присванивания с перемещением 
     // здесь мы у сущетвующего элемента должны освободить память (очистить все ячейки)
     // и  установить ему новые значения нового поля
 
-    GF2 = GameField(20,20);// Cons // Assig Move
-    std::cout <<"print GF2:\n";
-    GF2.GF_print(controller,player);
+    GF = GameField(20,20);// Cons // Assig Move // type = &&GameField
+    std::cout <<"print GF:\n";
+    GF.GF_print(controller,player);
 
     std::cout << "\n------------------------------\n";
 
+    
 
 
     // GF.set_entrance(1,8);
