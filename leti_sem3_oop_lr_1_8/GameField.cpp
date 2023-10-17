@@ -32,8 +32,9 @@
 //     exit_y = height - 1;
 // }
 
-GameField::GameField(int h, int w) : width(w), height(h),
-entrance_x(ENTRANCE), entrance_y(ENTRANCE), exit_x(height), exit_y(width) {
+GameField::GameField(int h, int w) {
+// : width(w), height(h),
+// entrance_x(ENTRANCE), entrance_y(ENTRANCE), exit_x(height), exit_y(width) {
     
     // здесь сразу идут верные кординты
     // if (w > width ||  w < MIN_WIDTH_HEIGHT || h > height || h < MIN_WIDTH_HEIGHT) {
@@ -41,56 +42,95 @@ entrance_x(ENTRANCE), entrance_y(ENTRANCE), exit_x(height), exit_y(width) {
     //     width = width;
     //     height = MAX_HEIGHT;
     // } // 
-    cells = new Cell*[height];
+    this->width = w;
+    this->height = h;
+    this->entrance_x = ENTRANCE;
+    this->entrance_y = ENTRANCE;
+    this->exit_x = h;
+    this->exit_y = w;
+
+    this->cells = new Cell*[height];
     for (int i = 0; i < height; i++) {
-        cells[i] = (Cell*)malloc(sizeof(Cell) * width);
+        this->cells[i] = (Cell*)malloc(sizeof(Cell) * width);
     }
 }
  
-GameField::GameField(const GameField& other) : width(other.width), height(other.height),
-entrance_x(other.entrance_x), entrance_y(other.entrance_y), exit_x(other.exit_x), exit_y(other.exit_y)
-{
-    cells = new Cell*[height];
-    for (int i = 0; i < height; i++) {
-        cells[i] = (Cell*)malloc(sizeof(Cell) * width);
-        for (int j = 0; j < width; j++) {
-            cells[i][j] = other.cells[i][j];
+GameField::GameField(const GameField& other) {
+    std::cout << "C Copy\n";
+    this->width = other.width;
+    this->height = other.height;
+    this->entrance_x = other.entrance_x;
+    this->entrance_y = other.entrance_y;
+    this->exit_x = other.exit_x;
+    this->exit_y = other.exit_y;
+ 
+    for (int i = 0; i < this->height; i++) {
+        for (int j = 0; j < this->width; j++) {
+            this->cells[i][j] = other.cells[i][j];
         }
     }
+    
+    // this->cells = new Cell*[height];
+    // for (int i = 0; i < height; i++) {
+    //     this->cells[i] = (Cell*)malloc(sizeof(Cell) * width);
+    //     for (int j = 0; j < width; j++) {
+    //         this->cells[i][j] = other.cells[i][j];
+    //     }
+    // }
 }
  
 GameField& GameField::operator=(const GameField& other){
+    std::cout << "Assig Copy\n";
     if (this == &other) {
         return *this;
     }
+    this->width = other.width;
+    this->height = other.height;
+    this->entrance_x = other.entrance_x;
+    this->entrance_y = other.entrance_y;
+    this->exit_x = other.exit_x;
+    this->exit_y = other.exit_y;
  
-    for (int i = 0; i < height; i++) {
-        delete[] cells[i];
-    }
-    delete[] cells;
- 
-    width = other.width;
-    height = other.height;
-    entrance_x = other.entrance_x;
-    entrance_y = other.entrance_y;
-    exit_x = other.exit_x;
-    exit_y = other.exit_y;
- 
-    cells = new Cell*[height];
-    for (int i = 0; i < height; i++) {
-        cells[i] = (Cell*)malloc(sizeof(Cell) * width);
-        for (int j = 0; j < width; j++) {
-            cells[i][j] = other.cells[i][j];
+    for (int i = 0; i < this->height; i++) {
+        for (int j = 0; j < this->width; j++) {
+            this->cells[i][j] = other.cells[i][j];
         }
     }
- 
+    
+    // this->cells = new Cell*[height];
+    // for (int i = 0; i < height; i++) {
+    //     this->cells[i] = (Cell*)malloc(sizeof(Cell) * width);
+    //     for (int j = 0; j < width; j++) {
+    //         this->cells[i][j] = other.cells[i][j];
+    //     }
+    // }
     return *this;
 }
  
-GameField::GameField(GameField&& other) : cells(other.cells), width(other.width), height(other.height),
-entrance_x(other.entrance_x), entrance_y(other.entrance_y), exit_x(other.exit_x), exit_y(other.exit_y)
-{
-    other.cells = nullptr;
+GameField::GameField(GameField&& other) {
+// : cells(other.cells), width(other.width), height(other.height),
+// entrance_x(other.entrance_x), entrance_y(other.entrance_y), exit_x(other.exit_x), exit_y(other.exit_y) {
+    std::cout << "C Move\n";
+    this->width = other.width;
+    this->height = other.height;
+    this->entrance_x = other.entrance_x;
+    this->entrance_y = other.entrance_y;
+    this->exit_x = other.exit_x;
+    this->exit_y = other.exit_y;
+
+    this->cells = new Cell*[height];
+    for (int i = 0;i < height; i++) {
+        this->cells[i] = (Cell*)malloc(sizeof(Cell) * width);
+        for (int j = 0; j < width; j++) {
+            this->cells[i][j] = other.cells[i][j];
+        }
+    }
+
+    for (int i = 0; i < height; i++) {
+        delete[] other.cells[i];
+    }
+    delete[] other.cells;
+
     other.width = 0;
     other.height = 0;
     other.entrance_x = 0;
@@ -100,30 +140,63 @@ entrance_x(other.entrance_x), entrance_y(other.entrance_y), exit_x(other.exit_x)
 }
  
 GameField& GameField::operator=(GameField&& other){
+     std::cout << "Assig Move\n";
     if (this == &other) {
         return *this;
     }
-    
-    for (int i = 0; i < height; i++) {
-        delete[] cells[i];
+    for (int i = 0; i < this->height; i++) {
+        delete[] this->cells[i];
     }
-    delete[] cells;
- 
-    cells = other.cells;
-    width = other.width;
-    height = other.height;
-    entrance_x = other.entrance_x;
-    entrance_y = other.entrance_y;
-    exit_x = other.exit_x;
-    exit_y = other.exit_y;
- 
-    other.cells = nullptr;
+    delete[] this->cells;
+
+    this->width = other.width;
+    this->height = other.height;
+    this->entrance_x = other.entrance_x;
+    this->entrance_y = other.entrance_y;
+    this->exit_x = other.exit_x;
+    this->exit_y = other.exit_y;
+
+    this->cells = new Cell*[height];
+    for (int i = 0;i < height; i++) {
+        this->cells[i] = (Cell*)malloc(sizeof(Cell) * width);
+        for (int j = 0; j < width; j++) {
+            this->cells[i][j] = other.cells[i][j];
+        }
+    }
+
+    for (int i = 0; i < height; i++) {
+        delete[] other.cells[i];
+    }
+    delete[] other.cells;
+
     other.width = 0;
     other.height = 0;
     other.entrance_x = 0;
     other.entrance_y = 0;
     other.exit_x = 0;
     other.exit_y = 0;
+
+
+    // for (int i = 0; i < height; i++) {
+    //     delete[] cells[i];
+    // }
+    // delete[] cells;
+ 
+    // cells = other.cells;
+    // width = other.width;
+    // height = other.height;
+    // entrance_x = other.entrance_x;
+    // entrance_y = other.entrance_y;
+    // exit_x = other.exit_x;
+    // exit_y = other.exit_y;
+ 
+    // other.cells = nullptr;
+    // other.width = 0;
+    // other.height = 0;
+    // other.entrance_x = 0;
+    // other.entrance_y = 0;
+    // other.exit_x = 0;
+    // other.exit_y = 0;
  
     return *this;
 }
@@ -167,9 +240,7 @@ void GameField::set_entrance(int x , int y){
     if((x <= height-1 && x >= ENTRANCE) && (y <= width-1 && y >= ENTRANCE)){
         this->entrance_x = x;
         this->entrance_y = y;
-        // entrance_x = x;
-        // entrance_y = y;
-    }else{
+    } else {
         std::cout << "Неверная точка входа\n";
     }
 }
@@ -178,9 +249,7 @@ void GameField::set_exit(int x , int y){
     if((x <= height-1 && x >= MIN_WIDTH_HEIGHT) && (y <= width-1 && y >= MIN_WIDTH_HEIGHT)){
         this->exit_x = x;
         this->exit_y = y;
-        // exit_x = x;
-        // exit_y = y;
-    }else{
+    } else {
         std::cout << "Неверная точка выхода\n";
     }
 }
