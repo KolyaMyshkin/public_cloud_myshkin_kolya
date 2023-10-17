@@ -45,7 +45,6 @@ int main(int argc, const char * argv[]) {
     GF.get_cell(3, 3).set_Passable(1);
     GF.get_cell(2, 2).set_Passable(1);
     GF.get_cell(2, 1).set_Passable(1);
-
     GF.GF_print(controller,player);
 
     std::cout << "\n------------------------------\n";
