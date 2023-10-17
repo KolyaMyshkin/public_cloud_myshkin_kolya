@@ -14,67 +14,68 @@ int main(int argc, const char * argv[]) {
     intro(intro_h,intro_w);
     Player player;
     Controller controller(player, intro_h, intro_w);
-    // Controller controller(Player,hig,wid);
-    // Controller controller(player);
-    // std::cout << player.get_Player_health() << " " << player.get_Player_money() << " " << player.get_Player_points() << "\n";
-    // std::cout << controller.get_x() << " " << controller.get_y() << "\n";
-    // controller.set_x(500);
-    // std::cout << controller.get_x() << " " << controller.get_y() << "\n";
-    // controller.set_x(0);
-    // controller.set_y(0);
-    // std::cout << controller.get_x() << " " << controller.get_y() << "\n";
-    // controller.move(Move::Left);
-    // std::cout << controller.get_x() << " " << controller.get_y() << "\n";
-    // controller.move(Move::Down);
-    // controller.move(Move::Down);
-    // controller.move(Move::Down);
-    // std::cout << controller.get_x() << " " << controller.get_y() << "\n";
-    
 
-    // задаю игровое поле
+    // задаю игровое поле 
     GameField GF(intro_h, intro_w);
-    GF.set_entrance(1,8);
+    GF.set_entrance(1,4);
     controller.set_x(1);
-    controller.set_y(8);
-    GF.set_exit(8,3);
+    controller.set_y(1);
+    GF.set_exit(5,5);
     GF.get_cell(1, 1).set_Passable(1);
-    GF.get_cell(1, 2).set_Passable(1);
-    GF.get_cell(1, 3).set_Passable(1);
     GF.get_cell(1, 4).set_Passable(1);
-    GF.get_cell(1, 1).set_Passable(1);
     GF.get_cell(3, 3).set_Passable(1);
     GF.get_cell(2, 2).set_Passable(1);
-    GF.get_cell(2, 1).set_Passable(1);
+
+
+    std::cout <<"print GF:\n";
     GF.GF_print(controller,player);
 
     std::cout << "\n------------------------------\n";
 
-    GameField GF1(4,4);
-    GF1 = GF;
-
-    // GF1.GF_print(controller,player); 
+    // копирование с помощью конструктора копирования
+    // получается при копировании GF -> GF1 нам не важно какого размера GF, я просто должен сделать абсолютную копию GF
+    // и при этом GF не теряет никаких своих качест(остается таким же каким и был)
+    // на выходе имеем полностью совпадающие GF и GF1
+    GameField GF1 = GF; // == GameField GF1(GF); // C Copy
+    std::cout <<"print GF1:\n";
+    GF1.GF_print(controller,player); 
 
     std::cout << "\n------------------------------\n";
 
-    // GameField GF2 = GF; /// 111
+    // копирование с помощью оператора присванивания
+    // здесь имеет занчение какого размера GF2 и GF, тк копирование поля GF будут просто накладываться на поля GF2
+    // то есть у нас выоста и ширина GF должны совпадать с высотой и шириной GF2 соответственно
+    // и при этом GF не теряет никаких своих качест(остается таким же каким и был)
+    // на выходе имеем полностью совпадающие GF и GF1
+    GameField GF2(10,10); // Cons
+    std::cout <<"print GF2:\n";
+    GF2.GF_print(controller,player);
     
-    // GF2.GF_print(controller,player);
+    GF2 = GF; // Assig Copy // C Copy
+    std::cout <<"print GF2:\n";
+    GF2.GF_print(controller,player);
 
-    // std::cout << "\n------------------------------\n";
-
-    // GameField GF3(4,4);
-
-    // GF3 = GF; /// 222
+    std::cout << "\n------------------------------\n";
     
-    // GF3.GF_print(controller,player);
-    
-    // std::cout << "\n------------------------------\n";
+    // конструктор перемещения 
+    // здесь мы создаем новый экземпляр класса GF5, который должен перенять все данные из GF
+    // при этом GF должен совободить память
+    GameField GF5(GF); // тут должен вызываться оператор присванивания с перемещением???????
+    std::cout <<"print GF2:\n";
+    GF5.GF_print(controller,player);
 
-    // GameField GF4(4,4);
+    std::cout << "\n------------------------------\n";
 
-    // GF4(GF);
+    // оператор присванивания с перемещением 
+    // здесь мы у сущетвующего элемента должны освободить память (очистить все ячейки)
+    // и  установить ему новые значения нового поля
 
-    // std::cout << "\n------------------------------\n";
+    GF2 = GameField(20,20);// Cons // Assig Move
+    std::cout <<"print GF2:\n";
+    GF2.GF_print(controller,player);
+
+    std::cout << "\n------------------------------\n";
+
 
 
     // GF.set_entrance(1,8);
