@@ -3,9 +3,8 @@
 
 #include "Cell.hpp"
 
-#include <stdio.h>
 #include <iostream>
- 
+
 Cell::Cell(bool isPassable) : passable(isPassable){}
  
 Cell::Cell(const Cell& other) : passable(other.passable){}

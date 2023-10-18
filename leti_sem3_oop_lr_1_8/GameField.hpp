@@ -4,9 +4,6 @@
 #ifndef GameField_hpp
 #define GameField_hpp
 #include "Cell.hpp"
-#include "Controller.hpp"
-#include "Player.hpp"
-
 #include <stdio.h>
 
 class GameField{
@@ -19,13 +16,13 @@ class GameField{
     Cell** cells;
 
 public:
-    // GameField();
+    GameField();
     GameField(int h, int w);
     GameField(const GameField& other);
     GameField& operator=(const GameField& other);
     GameField(GameField&& other);
     GameField& operator=(GameField&& other);
-    // GameField&& make();
+    GameField&& make();
     ~GameField();
     Cell& get_cell(int x, int y);
     int get_width();
@@ -36,7 +33,7 @@ public:
     int get_exit_y();
     void set_entrance(int x , int y);
     void set_exit(int x , int y);
-    void GF_print(Controller& controller, Player& player);
+    // void GF_print(Controller& controller, Player& player);
 };
 
 #endif /* GameField_hpp */
