@@ -4,32 +4,35 @@
 #include "Controller.hpp"
 #include "Player.hpp"
 #include "GameField.hpp"
-#include "Intro.hpp"
+// #include "Intro.hpp"
+#include "View.hpp"
 
 #include <iostream>
-
+#include <limits>
 int main(int argc, const char * argv[]) {
-    int intro_h=-1,intro_w=-1;
-    intro(intro_h,intro_w);
     Player player;
-    Controller controller(player, intro_h, intro_w);
+    GameField GF;
+    View v;
+    v.intro(GF);
+    Controller controller(player, GF);
+    // Controller controller(player, GF, intro_h, intro_w);
 
     // задаю игровое поле 
-    GameField GF(intro_h, intro_w);
-    GF.set_entrance(1,4);
-    controller.set_x(1);
-    controller.set_y(1);
-    GF.set_exit(5,5);
-    GF.get_cell(1, 1).set_Passable(1);
-    GF.get_cell(1, 4).set_Passable(1);
-    GF.get_cell(3, 3).set_Passable(1);
-    GF.get_cell(2, 2).set_Passable(1);
 
+    GF.set_entrance(1,4);
+    controller.set_x(GF.get_entrance_x());
+    controller.set_y(GF.get_entrance_y());
+    GF.set_exit(5,5);
+    GF.get_cell(1, 1).set_Passable(true);
+    GF.get_cell(3, 3).set_Passable(true);
+    GF.get_cell(2, 3).set_Passable(true);
+    GF.get_cell(3, 2).set_Passable(true);
+    GF.get_cell(2, 2).set_Passable(true);
 
     // std::cout <<"print GF:\n";
     // GF.GF_print(controller,player);
 
-    std::cout << "\n------------------------------\n";
+    // std::cout << "\n------------------------------\n";
 
     // копирование с помощью конструктора копирования
     // получается при копировании GF -> GF1 нам не важно какого размера GF, я просто должен сделать абсолютную копию GF
@@ -40,29 +43,29 @@ int main(int argc, const char * argv[]) {
     // GF1.GF_print(controller,player); 
     
     //копирование 
-    GameField GF1(GF);
-    GF1.GF_print(controller,player); 
+    // GameField GF1(GF);
+    // GF1.GF_print(controller,player); 
 
     //копирование 
-    GameField GF2 = GF;
-    GF2.GF_print(controller,player);    
+    // GameField GF2 = GF;
+    // GF2.GF_print(controller,player);    
 
     // копирование  через = 
-    GameField GF3(10,10);
-    GF3 = GF;
-    GF3.GF_print(controller,player);    
+    // GameField GF3(10,10);
+    // GF3 = GF;
+    // GF3.GF_print(controller,player);    
 
 
     // перемещение через =
-    GameField f(10,10);
-    f = GameField(20,20);
-    f.GF_print(controller,player);
+    // GameField f(10,10);
+    // f = GameField(20,20);
+    // f.GF_print(controller,player);
 
     // перемещение через конструтор (не работает)
-    GameField g(make());
+    // GameField g(make());
 
 
-    std::cout << "\n------------------------------\n";
+    // std::cout << "\n------------------------------\n";
 
     // копирование с помощью оператора присванивания
     // здесь имеет занчение какого размера GF2 и GF, тк копирование поля GF будут просто накладываться на поля GF2
@@ -116,9 +119,13 @@ int main(int argc, const char * argv[]) {
     // GF.get_cell(2, 2).set_Passable(1);
     // GF.get_cell(2, 1).set_Passable(1);
     // GF.GF_print(controller,player);
+
+
+
+
     // char c = ' ';
-    // while ((controller.get_x() != GF.get_exit_x() ||  controller.get_y() != GF.get_exit_y()) && std::cin >> c) {
-    //     if (controller.get_x() == GF.get_exit_x() && controller.get_y() == GF.get_exit_y()) {
+    // while ((controller.get_current_x() != GF.get_exit_x() ||  controller.get_current_y() != GF.get_exit_y()) && std::cin >> c) {
+    //     if (controller.get_current_x() == GF.get_exit_x() && controller.get_current_y() == GF.get_exit_y()) {
             
     //         break;
     //     } else {
@@ -137,6 +144,31 @@ int main(int argc, const char * argv[]) {
     // std::cout << "Вы дошли до финиша!!!\n";
     // std::cout << GF.get_entrance_x() << " " << GF.get_entrance_y() << "\n";
     // std::cout << GF.get_exit_x() << " " << GF.get_exit_y() << "\n";
+
+
+
+    controller.print_game();
+    char c;
+    while ((controller.get_current_x() != GF.get_exit_x() ||  controller.get_current_y() != GF.get_exit_y()) && std::cin >> c) {
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+        if (controller.get_current_x() == GF.get_exit_x() && controller.get_current_y() == GF.get_exit_y()) {
+            break;
+        } else {
+            if (c == 'a') {
+                controller.move(Move::Left);
+            } else if (c == 'd') {
+                controller.move(Move::Right);
+            } else if (c == 'w') {
+                controller.move(Move::Up);
+            } else if (c == 's') {
+                controller.move(Move::Down);
+            }
+            controller.print_game();
+        }
+    }    
+    std::cout << "Вы дошли до финиша!!!\n";
+    std::cout << GF.get_entrance_x() << " " << GF.get_entrance_y() << "\n";
+    std::cout << GF.get_exit_x() << " " << GF.get_exit_y() << "\n";
 
     return 0;
 }

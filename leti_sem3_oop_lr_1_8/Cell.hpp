@@ -7,6 +7,7 @@
 class Cell{
     bool passable;
 public:
+    Cell() = default;
     Cell(bool isPassable);
     Cell(const Cell& other);
     Cell& operator=(const Cell& other);
