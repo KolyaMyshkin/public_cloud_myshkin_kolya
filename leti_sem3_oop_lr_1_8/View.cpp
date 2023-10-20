@@ -45,7 +45,7 @@ void View::intro(GameField& GF) {
             std::cout << "Размеры поля: " << hig << "x" << wid << "\n";
         }
     }
-    GF = GameField(hig,wid);
+    GF = GameField(hig,wid);;
     return;
 }
 

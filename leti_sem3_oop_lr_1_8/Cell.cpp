@@ -10,9 +10,9 @@ Cell::Cell(bool isPassable) : passable(isPassable){}
 Cell::Cell(const Cell& other) : passable(other.passable){}
  
 Cell& Cell::operator=(const Cell& other){
-    if(this == &other){
-        return *this;
-    }
+    // if(this == &other){
+    //     return *this;
+    // }
     passable = other.passable;
     return *this;
 }
