@@ -14,7 +14,8 @@ entrance_x(ENTRANCE), entrance_y(ENTRANCE), exit_x(h), exit_y(w) {
     std::cout << "Cons\n";
     cells = new Cell*[height];
     for (int i = 0; i < height; i++) {
-        cells[i] = (Cell*)malloc(sizeof(Cell) * width);
+        this->cells[i] = new Cell[width];
+        // cells[i] = (Cell*)malloc(sizeof(Cell) * width);
     }
 }
 
@@ -78,7 +79,11 @@ GameField& GameField::operator=(GameField&& other){
         std::swap(entrance_y, other.entrance_y);
         std::swap(exit_x, other.exit_x);
         std::swap(exit_y, other.exit_y);
-        std::swap(cells, other.cells);
+        cells = new Cell*[height];
+        for (int i = 0; i < height; i++) {
+            std::swap(cells[i], other.cells[i]);
+        }
+        
         // this->width = other.width;
         // this->height = other.height;
         // this->entrance_x = other.entrance_x;
